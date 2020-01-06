@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 
 from django_filters.rest_framework import DjangoFilterBackend
+from api.filters import ArticleFilter
 
 from api.models import Article
 from api.serializers import ArticleSerializer
@@ -52,4 +53,4 @@ class ArticleClients(generics.ListAPIView):
     serializer_class = ArticleSerializer
     queryset = Article.objects.all()
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['user', 'name', 'created']
+    filterset_class = ArticleFilter
