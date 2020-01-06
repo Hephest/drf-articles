@@ -8,14 +8,19 @@ from api.serializers import ArticleSerializer
 
 
 class ArticleList(generics.ListCreateAPIView):
-    # TODO: Filter objects accordingly to owner
-    queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+
+    def get_queryset(self):
+        owner = self.request.user
+        return Article.objects.filter(user=owner)
 
 
 class ArticleDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+
+    def get_queryset(self):
+        owner = self.request.user
+        return Article.objects.filter(user=owner)
 
 
 class ArticleStatistics(APIView):

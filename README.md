@@ -4,6 +4,12 @@ Simple REST API, using Django & Django REST Framework.
 
 ## Status
 
+### 1/6/20
+
+**Total:** +0:15 h
+
+* Each user could see and edit their own article
+
 ### 1/4/20
 
 **Total:** 1:15 h
