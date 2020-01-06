@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
@@ -17,6 +17,7 @@ class ArticleList(generics.ListCreateAPIView):
     A read-write view that returns collection of articles.
     """
     serializer_class = ArticleSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         owner = self.request.user
@@ -28,6 +29,7 @@ class ArticleDetail(generics.RetrieveUpdateDestroyAPIView):
     A read-write-delete view for single article.
     """
     serializer_class = ArticleSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         owner = self.request.user
@@ -39,6 +41,7 @@ class ArticleStatistics(APIView):
     A view that returns the count of articles for each user in JSON.
     """
     renderer_classes = [JSONRenderer]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, format=None):
         data = []
@@ -55,6 +58,7 @@ class ArticleClients(generics.ListAPIView):
     A read-only view that shows article list to clients.
     """
     serializer_class = ArticleSerializer
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Article.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_class = ArticleFilter
