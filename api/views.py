@@ -6,6 +6,8 @@ from rest_framework.renderers import JSONRenderer
 from django_filters.rest_framework import DjangoFilterBackend
 from api.filters import ArticleFilter
 
+from django.contrib.auth.models import User
+
 from api.models import Article
 from api.serializers import ArticleSerializer
 
@@ -34,16 +36,18 @@ class ArticleDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class ArticleStatistics(APIView):
     """
-    A view that returns the count of articles in JSON.
+    A view that returns the count of articles for each user in JSON.
     """
     renderer_classes = [JSONRenderer]
 
     def get(self, request, format=None):
-        article_count = Article.objects.count()
-        content = {
-            'total': article_count
-        }
-        return Response(content)
+        data = []
+        for each_user in User.objects.all():
+            data.append({
+                'user': each_user.username,
+                'articles': Article.objects.filter(user=each_user).count()
+            })
+        return Response(data)
 
 
 class ArticleClients(generics.ListAPIView):
