@@ -4,6 +4,12 @@ Simple REST API, using Django & Django REST Framework.
 
 ## Status
 
+### 1/20/20
+
+**Total:** 0:05 h
+
+* Added `requirements.txt`
+
 ### 1/6/20
 
 **Total:** 3:05 h
